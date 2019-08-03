@@ -34,4 +34,4 @@ RUN mkdir -p /etc/ansible && echo -e '[local]\nlocalhost ansible_connection=loca
 RUN mkdir -p /run/systemd/system
 
 VOLUME ["/sys/fs/cgroup"]
-CMD ["/usr/lib/systemd/systemd"]
+CMD ["/usr/lib/systemd/systemd", "--system"]
