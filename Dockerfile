@@ -22,6 +22,7 @@ RUN mkdir -p /etc/ansible && echo -e '[local]\nlocalhost ansible_connection=loca
 
 RUN mkdir -p /run/systemd/system
 
-VOLUME ["/sys/fs/cgroup"]
+#VOLUME ["/sys/fs/cgroup"]
+VOLUME ["/sys/fs/cgroup", "/tmp", "/run"]
 #CMD ["/usr/lib/systemd/systemd", "--system"]
 CMD ["/usr/sbin/init"]
