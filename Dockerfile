@@ -1,17 +1,6 @@
-FROM centos:7
-LABEL maintainer="Ahmad Haghighi"
+FROM centos/systemd
+MAINTAINER Ahmad Haghighi <haghighi@fedoraproject.org>
 ENV container=docker
-
-# Install systemd -- See https://hub.docker.com/_/centos/
-RUN yum -y update; yum clean all; \
-(cd /lib/systemd/system/sysinit.target.wants/; for i in *; do [ $i == systemd-tmpfiles-setup.service ] || rm -f $i; done); \
-rm -f /lib/systemd/system/multi-user.target.wants/*;\
-rm -f /etc/systemd/system/*.wants/*;\
-rm -f /lib/systemd/system/local-fs.target.wants/*; \
-rm -f /lib/systemd/system/sockets.target.wants/*udev*; \
-rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \
-rm -f /lib/systemd/system/basic.target.wants/*;\
-rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 # Update system + Install ansible and other requirements.
 RUN yum makecache fast && yum -y install deltarpm epel-release \
@@ -34,4 +23,5 @@ RUN mkdir -p /etc/ansible && echo -e '[local]\nlocalhost ansible_connection=loca
 RUN mkdir -p /run/systemd/system
 
 VOLUME ["/sys/fs/cgroup"]
-CMD ["/usr/lib/systemd/systemd", "--system"]
+#CMD ["/usr/lib/systemd/systemd", "--system"]
+CMD ["/usr/sbin/init"]
